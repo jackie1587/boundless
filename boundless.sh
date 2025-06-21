@@ -246,7 +246,7 @@ function install_node() {
 
     echo "执行 setup.sh 脚本..."
     chmod +x scripts/setup.sh
-    ./scripts/setup.sh
+    sudo ./scripts/setup.sh
     if [ $? -ne 0 ]; then
         echo "执行 setup.sh 失败，请检查脚本权限或手动执行"
         exit 1
@@ -472,7 +472,7 @@ function install_node() {
         echo "已跳过USDC存款步骤"
     fi
 
-    # 启动 just broker 前，设置 SEGMENT_SIZE
+    # 启动 sudo just broker 前，设置 SEGMENT_SIZE
     echo "----------------------------------------"
     echo "请设置 GPU 的 SEGMENT_SIZE（推荐值：8GB填19，16GB填20，20GB填21，40GB填22）"
     while true; do
@@ -499,7 +499,7 @@ function install_node() {
     fi
 
     # 确保在 boundless 目录下启动 broker
-    just broker &
+    sudo just broker &
     echo "broker 服务已在后台启动。"
 
     echo "脚本执行完成！"
@@ -634,8 +634,8 @@ function remove_node() {
 
     # 停止 broker 服务
     echo "正在停止 broker 服务..."
-    if pgrep -f "just broker" > /dev/null; then
-        just broker down
+    if pgrep -f "sudo just broker" > /dev/null; then
+        sudo just broker down
         sleep 2
         echo "broker 服务已停止"
     else
@@ -644,7 +644,7 @@ function remove_node() {
 
     # 清理数据
     echo "正在清理节点数据..."
-    just broker clean
+    sudo just broker clean
     if [ $? -ne 0 ]; then
         echo "警告：清理数据时出现错误，但将继续删除目录"
     else
